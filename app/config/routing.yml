@@ -1,0 +1,4 @@
+auction:
+    resource: "@AuctionBundle/Controller/"
+    type:     annotation
+    prefix:   /
