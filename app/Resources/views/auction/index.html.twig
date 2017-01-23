@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Auctions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Auc</th>
+                <th>Item</th>
+                <th>Owner</th>
+                <th>OwnerRealm</th>
+                <th>Bid</th>
+                <th>Buyout</th>
+                <th>Quantity</th>
+                <th>TimeLeft</th>
+                <th>Rand</th>
+                <th>Seed</th>
+                <th>Modifiers</th>
+                <th>BonusLists</th>
+                <th>PetSpeciesId</th>
+                <th>PetBreedId</th>
+                <th>PetLevel</th>
+                <th>PetQualityId</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for auction in auctions %}
+            <tr>
+                <td><a href="{{ path('auction_show', { 'id': auction.id }) }}">{{ auction.id }}</a></td>
+                <td>{{ auction.auc }}</td>
+                <td>{{ auction.item }}</td>
+                <td>{{ auction.owner }}</td>
+                <td>{{ auction.ownerRealm }}</td>
+                <td>{{ auction.bid }}</td>
+                <td>{{ auction.buyout }}</td>
+                <td>{{ auction.quantity }}</td>
+                <td>{{ auction.timeLeft }}</td>
+                <td>{{ auction.rand }}</td>
+                <td>{{ auction.seed }}</td>
+                <td>{% if auction.modifiers %}{{ auction.modifiers|join(', ') }}{% endif %}</td>
+                <td>{% if auction.bonusLists %}{{ auction.bonusLists|join(', ') }}{% endif %}</td>
+                <td>{{ auction.petSpeciesId }}</td>
+                <td>{{ auction.petBreedId }}</td>
+                <td>{{ auction.petLevel }}</td>
+                <td>{{ auction.petQualityId }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('auction_show', { 'id': auction.id }) }}">show</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Auction</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ auction.id }}</td>
+            </tr>
+            <tr>
+                <th>Auc</th>
+                <td>{{ auction.auc }}</td>
+            </tr>
+            <tr>
+                <th>Item</th>
+                <td>{{ auction.item }}</td>
+            </tr>
+            <tr>
+                <th>Owner</th>
+                <td>{{ auction.owner }}</td>
+            </tr>
+            <tr>
+                <th>Ownerrealm</th>
+                <td>{{ auction.ownerRealm }}</td>
+            </tr>
+            <tr>
+                <th>Bid</th>
+                <td>{{ auction.bid }}</td>
+            </tr>
+            <tr>
+                <th>Buyout</th>
+                <td>{{ auction.buyout }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ auction.quantity }}</td>
+            </tr>
+            <tr>
+                <th>Timeleft</th>
+                <td>{{ auction.timeLeft }}</td>
+            </tr>
+            <tr>
+                <th>Rand</th>
+                <td>{{ auction.rand }}</td>
+            </tr>
+            <tr>
+                <th>Seed</th>
+                <td>{{ auction.seed }}</td>
+            </tr>
+            <tr>
+                <th>Modifiers</th>
+                <td>{% if auction.modifiers %}{{ auction.modifiers|join(', ') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Bonuslists</th>
+                <td>{% if auction.bonusLists %}{{ auction.bonusLists|join(', ') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Petspeciesid</th>
+                <td>{{ auction.petSpeciesId }}</td>
+            </tr>
+            <tr>
+                <th>Petbreedid</th>
+                <td>{{ auction.petBreedId }}</td>
+            </tr>
+            <tr>
+                <th>Petlevel</th>
+                <td>{{ auction.petLevel }}</td>
+            </tr>
+            <tr>
+                <th>Petqualityid</th>
+                <td>{{ auction.petQualityId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('auction_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

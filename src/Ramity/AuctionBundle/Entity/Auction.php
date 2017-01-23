@@ -528,4 +528,3 @@ class Auction
         return $this->petQualityId;
     }
 }
-
