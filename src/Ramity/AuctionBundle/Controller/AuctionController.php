@@ -27,8 +27,10 @@ class AuctionController extends Controller
         $apiKey = $this->container->getParameter('apiKey');
 
         $wow = $this->get('auction.wowapi');
-        $wow->setApiKey($apiKey);
-        $auctions = $wow->getAuctions("malganis");
+        //$wow->setApiKey($apiKey);
+        //$auctions = $wow->getAuctions("malganis");
+
+        $auctions = $wow->getAuctions();
 
         //$auctions = $em->getRepository('AuctionBundle:Auction')->findAll();
 
