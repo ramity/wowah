@@ -1,21 +1,21 @@
 <?php
 namespace Ramity\AuctionBundle\Service;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Ramity\AuctionBundle\Entity\Auction;
 
-Class Wowapi extends Controller
+Class Wowapi
 {
-    private $apiKey;
-    private $apiSecret;
+    private $doctrine;
 
-    function __constructor($api = null, $apiSecret = null)
+    public function __construct($doctrine)
     {
-        $this->apiKey = $apiKey;
-        $this->apiSecret = $apiSecret;
+        $this->doctrine = $doctrine;
     }
 
     public function getAuctions()
     {
+        $em = $this->doctrine->getEntityManager();
+
         $ch = curl_init();
 
         $url = 'https://us.api.battle.net/wow/auction/data/malganis?locale=en_US&apikey=v9fs6fdmur34edt8tggz3abzfkdmu8bu';
@@ -44,12 +44,76 @@ Class Wowapi extends Controller
 
         foreach($auctions as $key => $auction)
         {
-            $auction->id = $key;
-        }
+            $repository = $em->getRepository('AuctionBundle:Auction');
+            $entity = $repository->findOneBy(array('auc' => $auction->auc));
 
-        echo '<pre>';
-        print_r($auctions);
-        die();
+            if(!$entity)
+            {
+                $entity = new Auction();
+            }
+
+            $entity->setAuc($auction->auc);
+            $entity->setItem($auction->item);
+            $entity->setOwner($auction->owner);
+            $entity->setOwnerRealm($auction->ownerRealm);
+            $entity->setBid($auction->bid);
+            $entity->setBuyout($auction->buyout);
+            $entity->setQuantity($auction->quantity);
+            $entity->setTimeLeft($auction->timeLeft);
+            $entity->setRand($auction->rand);
+            $entity->setSeed($auction->seed);
+            $entity->setContext($auction->context);
+
+            if(property_exists($auction, 'modifiers'))
+            {
+                $modifiers = array();
+
+                foreach ($auction->modifiers as $array)
+                {
+                    $modifiers[] = array(
+                        'type' => $array->type,
+                        'value' => $array->value
+                    );
+                }
+
+                $entity->setModifiers($modifiers);
+            }
+
+            if(property_exists($auction, 'petSpeciesId'))
+            {
+                $entity->setPetSpeciesId($auction->petSpeciesId);
+            }
+
+            if(property_exists($auction, 'petBreedId'))
+            {
+                $entity->setPetBreedId($auction->petBreedId);
+            }
+
+            if(property_exists($auction, 'petLevel'))
+            {
+                $entity->setPetLevel($auction->petLevel);
+            }
+
+            if(property_exists($auction, 'petQualityId'))
+            {
+                $entity->setPetQualityId($auction->petQualityId);
+            }
+
+            if(property_exists($auction, 'bonusLists'))
+            {
+                $bonusLists = array();
+
+                foreach ($auction->bonusLists as $array)
+                {
+                    $bonusLists[] = array(
+                        'bonusListId' => $array->bonusListId
+                    );
+                }
+            }
+
+            $em->persist($entity);
+            $em->flush();
+        }
 
         return $auctions;
     }

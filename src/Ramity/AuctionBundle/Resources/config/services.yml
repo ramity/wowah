@@ -1,3 +1,4 @@
 services:
     auction.wowapi:
         class: Ramity\AuctionBundle\Service\Wowapi
+        arguments: ["@doctrine"]

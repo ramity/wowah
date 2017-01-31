@@ -22,8 +22,6 @@ class AuctionController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
         $apiKey = $this->container->getParameter('apiKey');
 
         $wow = $this->get('auction.wowapi');
@@ -32,6 +30,7 @@ class AuctionController extends Controller
 
         $auctions = $wow->getAuctions();
 
+        //$em = $this->getDoctrine()->getManager();
         //$auctions = $em->getRepository('AuctionBundle:Auction')->findAll();
 
         return $this->render('auction/index.html.twig', array(
