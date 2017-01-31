@@ -26,6 +26,10 @@ Class Wowapi
         $data = curl_exec($ch);
         curl_close($ch);
 
+        print_r($data);
+
+        die();
+
         $json = json_decode($data);
 
         $url = $json->files[0]->url;
