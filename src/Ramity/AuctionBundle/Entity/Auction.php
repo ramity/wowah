@@ -52,14 +52,14 @@ class Auction
     /**
      * @var int
      *
-     * @ORM\Column(name="bid", type="integer")
+     * @ORM\Column(name="bid", type="bigint")
      */
     private $bid;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="buyout", type="integer")
+     * @ORM\Column(name="buyout", type="bigint")
      */
     private $buyout;
 
@@ -87,9 +87,16 @@ class Auction
     /**
      * @var int
      *
-     * @ORM\Column(name="seed", type="integer")
+     * @ORM\Column(name="seed", type="bigint")
      */
     private $seed;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="context", type="integer")
+     */
+    private $context;
 
     /**
      * @var array
@@ -382,6 +389,30 @@ class Auction
     public function getSeed()
     {
         return $this->seed;
+    }
+
+    /**
+     * Set context
+     *
+     * @param integer $context
+     *
+     * @return Auction
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return int
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 
     /**

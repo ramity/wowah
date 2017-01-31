@@ -14,21 +14,28 @@ Class Wowapi
 
     public function getAuctions()
     {
+        //buckle in boys and girls
+        ini_set('max_execution_time', 0);
+        //it's about to last forever
+
         $em = $this->doctrine->getEntityManager();
 
         $ch = curl_init();
-
         $url = 'https://us.api.battle.net/wow/auction/data/malganis?locale=en_US&apikey=v9fs6fdmur34edt8tggz3abzfkdmu8bu';
-
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, -1);
         $data = curl_exec($ch);
+
+        if(curl_errno($ch))
+        {
+            echo 'Curl error: ' . curl_error($ch) . ' <br>';
+            print_r(curl_getinfo($ch));
+        }
+
+        //
+
         curl_close($ch);
-
-        print_r($data);
-
-        die();
 
         $json = json_decode($data);
 
@@ -46,7 +53,7 @@ Class Wowapi
 
         $auctions = $json->auctions;
 
-        foreach($auctions as $key => $auction)
+        foreach($auctions as $auction)
         {
             $repository = $em->getRepository('AuctionBundle:Auction');
             $entity = $repository->findOneBy(array('auc' => $auction->auc));
@@ -117,7 +124,10 @@ Class Wowapi
 
             $em->persist($entity);
             $em->flush();
+
         }
+
+        ini_restore('max_execution_time');
 
         return $auctions;
     }

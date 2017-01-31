@@ -17,6 +17,7 @@
                 <th>TimeLeft</th>
                 <th>Rand</th>
                 <th>Seed</th>
+                <th>Context</th>
                 <th>Modifiers</th>
                 <th>BonusLists</th>
                 <th>PetSpeciesId</th>
@@ -40,8 +41,21 @@
                 <td>{{ auction.timeLeft }}</td>
                 <td>{{ auction.rand }}</td>
                 <td>{{ auction.seed }}</td>
-                <td>{% if auction.modifiers %}{{ auction.modifiers|join(', ') }}{% endif %}</td>
-                <td>{% if auction.bonusLists %}{{ auction.bonusLists|join(', ') }}{% endif %}</td>
+                <td>{{ auction.context }}</td>
+                <td>
+                    {% if auction.modifiers %}
+                        {% for modifier in auction.modifiers %}
+                            {{ modifier.type }} | {{ modifier.value }} <br>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if auction.bonusLists %}
+                        {% for bonusList in auction.bonusLists %}
+                            {{ bonusList.bonusListId }} <br>
+                        {% endfor %}
+                    {% endif %}
+                </td>
                 <td>{{ auction.petSpeciesId }}</td>
                 <td>{{ auction.petBreedId }}</td>
                 <td>{{ auction.petLevel }}</td>
